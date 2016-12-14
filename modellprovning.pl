@@ -19,6 +19,13 @@ check(T, L, S, [], F).
 % To execute: consult('your_file.pl'). verify('input.txt').
 % Literals
 
+find_and_get_list([H|L],AL,S) :-
+  member(S,H) -> find_and_get_list(H,AL),
+  find_and_get_list(L,AL,S).
+
+find_and_get_list([H|T],AL) :-
+  AL = T.
+
 check(_,[],_,_,_).
 
 check(_, [H|R], S, [], X) :-
@@ -52,11 +59,15 @@ check_ext4(_, [H|R], [], and(F,G)) :-
 %           s1 -> s4 -> s5 -> (ingen)
 check_AX([],_,_,_,_)
 
-check_AX([H1|T1], [H2|T2], S, _, AX(F))
-  check_AXHelper(H1,H2,F),
-  check_AX(T1,[H2|T2],S,U,F).
+check_AX(Adj, [H2|T2], S, _, AX(F))
+  find_and_get_list(Adj,AL,S),
+  check_AXHelper1(AL,[H2|T2], S, _, F).
 
-check_AXHelper(AdjState,[H|T],F) :-
+check_AXHelper1([H1|T1],[H2|T2], S, _, F).
+  check_AXHelper2(H1,H2,F),
+  check_AXHelper1(T1,[H2|T2],S,U,F).
+
+check_AXHelper2(AdjState,[H|T],F) :-
   AdjState = H -> member(F,T),
   check_AXHelper(AdjState,T,F).
 
@@ -64,22 +75,26 @@ check_AXHelper(AdjState,[H|T],F) :-
 % EX
 check_EX([],_,_,_,_)
 
-check_EX([H1|T1], [H2|T2], S, _, EX(F))
-  (check_EXHelper(H1,H2,F); check_EX(T1,[H2|T2],S,U,F)).
+check_EX(Adj, [H2|T2], S, _, EX(F)) :-
+  find_and_get_list(Adj,AL,S),
+  check_EXHelper1(AL,[H2|T2], S, _, F).
 
-check_EXHelper(AdjState,[H|T],F) :-
+check_EXHelper1([H1|T1],[H2|T2], S, _, F) :-
+  (check_EXHelper2(H1,H2,F); check_EXHelper1(T1,[H2|T2],S,U,F)).
+
+check_EXHelper2(AdjState,[H|T],F) :-
   AdjState = H -> member(F,T),
   check_AXHelper(AdjState,T,F).
 
 
 % AG
-check_AG([H1|T1], [H2|T2], S, _, AG(F))
-  check_AGHelper(H1,H2,F),
-  check_AG(T1,[H2|T2],S,U,F).
+check_AG(Adj, [H2|T2], S, U, AG(F))
+  find_and_get_list(Adj,AL,S),
+  check_all_routes(AL,[H2|T2],S,U,F),
+  check_AGHelper(AL, [H2|T2], S, U, AG(F))
 
+check_all_routes([H1|T1],[H2|T2],S,U,F)
 check_AGHelper(AdjState,[H|T],F) :-
-  AdjState = H -> member(F,T),
-  check_AGHelper(AdjState,T,F).
 
 % EG
 % EF
