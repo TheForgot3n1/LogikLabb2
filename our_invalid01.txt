@@ -1,0 +1,19 @@
+[[w, [b]],
+ [b, [bt1,bt2]],
+ [bt1, [y,n]],
+ [bt2, [y,n]],
+ [y, [sm]],
+ [n, [sm]],
+ [sm, [w]]].
+
+[[w, [out]],
+ [b, [b,in]],
+ [bt1, [b,in,b1]],
+ [bt2, [b,in,b2]],
+ [y, [b,out,d]],
+ [n, [b,out,d]],
+ [sm, [b,out,d]]].
+
+w.
+
+and(af(ex(b)),ag(ef(sm))).

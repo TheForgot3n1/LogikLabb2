@@ -22,12 +22,7 @@ check(T, L, S, [], F).
 notMember(X, L) :-
   not(member(X, L)).
 
-check_ext([_|T], X) :-
-  flatten(T, R),
-  member(X, R).
-
 check(_,[],_,_,_).
-
 check(_, L, S, _, F) :-
   member([S, X], L),
   member(F, X).
