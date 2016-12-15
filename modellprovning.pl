@@ -68,12 +68,31 @@ check_ext4(_, [H|R], [], and(F,G)) :-
 % enklaste: s1 -> s2 -> s3 -> (ingen)
 %           s1 -> s4 -> s5 -> (ingen)
 check(T, L, S, _, ax(F)) :-
-  find_and_get_list(T, AL, S),
+  member([S, AL], T),
   check_AX(AL, L, S, _, F).
 
 check(T, L, S, _, ex(F)) :-
-  find_and_get_list(T, AL, S),
+  member([S, AL], T),
   check_EX(AL, L, S, _, F).
+
+check(_, _, S, U, ag(_)) :-
+  member(S, U).
+
+check(T, L, S, U, ag(F)) :-
+  check(T, L, S, [], F),
+  member([S, AL], T),
+  check_all(T, L, AL, [S|U], ag(F)).
+
+check(T, L, S, U, af(F)) :-
+  \+ member(S, U),
+  check(T, L, S, [], F);
+  (member([S, AL], T),
+  check_all(T, L, AL, [S|U], af(F))).
+
+check(T, L, S, U, eg(F)) :-
+  check(T, L, S, U),
+  member([S, AL], T),
+  check_exists(T, L, AL, [S|U], eg(F)).
 
 %check(T, L, S, _, af(F)) :-
 %  find_and_get_list(T, AL, S),
@@ -92,14 +111,15 @@ check_EX([H|T], L, _, _, F) :-
   check(_, L, H, _, F);
   check_EX(T, L, _, _, F).
 
+check_all(_,_,[],_,_).
+check_all(T, L, [H|T], U, F) :-
+  check(T, L, H, U, F),
+  check_all(T, L, T, U, F).
 
-
-check(T, L, S, U, ag(F)) :-
-
-
-
-
-
+check_exists(_,_,[],_,_).
+check_exists(T, L, [H|T], U, F) :-
+  check(T, L, H, U, F);
+  check_exists(T, L, T, U, F).
 
 
 
