@@ -1,0 +1,24 @@
+T = 
+[
+ [W, [b]]
+ [b, [bt1,bt2]]
+ [bt1, [Y,N]]
+ [bt2, [Y,N]]
+ [Y, [sm]]
+ [N, [sm]]
+ [sm, [W]]
+]
+L =
+[
+ [W, [out]],
+ [b, [b,in]],
+ [bt1, [b,in,b]]
+ [bt1, [b,in,b]]
+ [Y, [b,out,d]]
+ [N, [b,out,d]]
+ [sm, [b,out,d]]
+].
+
+W.
+
+neg(in).
