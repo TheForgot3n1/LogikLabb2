@@ -1,24 +1,23 @@
-T = 
 [
- [W, [b]]
+ [w, [b]]
  [b, [bt1,bt2]]
- [bt1, [Y,N]]
- [bt2, [Y,N]]
- [Y, [sm]]
- [N, [sm]]
- [sm, [W]]
+ [bt1, [y,n]]
+ [bt2, [y,n]]
+ [y, [sm]]
+ [n, [sm]]
+ [sm, [w]]
 ]
-L =
+
 [
- [W, [out]],
+ [w, [out]],
  [b, [b,in]],
- [bt1, [b,in,b]]
- [bt1, [b,in,b]]
- [Y, [b,out,d]]
- [N, [b,out,d]]
+ [bt1, [b,in,b1]]
+ [bt2, [b,in,b2]]
+ [y, [b,out,d]]
+ [n, [b,out,d]]
  [sm, [b,out,d]]
 ].
 
-W.
+w.
 
 neg(in).
